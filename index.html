@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Speed Converter</title>
+  <style>
+    body {
+      background-color: #0a1b2a;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-top: 60px;
+      font-size: 28px;
+    }
+    input, select {
+      padding: 10px;
+      margin: 10px auto;
+      display: block;
+      font-size: 18px;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+    img {
+      margin-top: 40px;
+      max-width: 90%;
+      height: auto;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Speed Converter</h1>
+
+  <input type="number" id="speedInput" placeholder="Enter Speed">
+  <select id="unitSelector">
+    <option value="kt">Knots</option>
+    <option value="mph">Miles per Hour</option>
+    <option value="kmh">Kilometers per Hour</option>
+  </select>
+
+  <div class="result" id="convertedSpeeds">
+    <!-- Results will appear here -->
+  </div>
+
+  <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/main/jet_globe.png" alt="Jet graphic">
+
+  <div class="footer">Powered by Wingman LLC</div>
+
+  <script>
+    function convertSpeed() {
+      const input = parseFloat(document.getElementById("speedInput").value);
+      const unit = document.getElementById("unitSelector").value;
+      const resultDiv = document.getElementById("convertedSpeeds");
+
+      if (isNaN(input)) {
+        resultDiv.innerHTML = "";
+        return;
+      }
+
+      let knots, mph, kmh;
+
+      if (unit === "kt") {
+        knots = input;
+        mph = input * 1.15078;
+        kmh = input * 1.852;
+      } else if (unit === "mph") {
+        knots = input / 1.15078;
+        mph = input;
+        kmh = input * 1.60934;
+      } else if (unit === "kmh") {
+        knots = input / 1.852;
+        mph = input / 1.60934;
+        kmh = input;
+      }
+
+      resultDiv.innerHTML = `
+        ${knots.toFixed(2)} KT<br>
+        ${mph.toFixed(2)} MPH<br>
+        ${kmh.toFixed(2)} KM/H
+      `;
+    }
+
+    document.getElementById("speedInput").addEventListener("input", convertSpeed);
+    document.getElementById("unitSelector").addEventListener("change", convertSpeed);
+  </script>
+</body>
+</html>
